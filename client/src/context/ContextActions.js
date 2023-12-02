@@ -6,11 +6,12 @@ export const LOGOUT = 'LOGOUT';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
-
+export const GET_BLOG_BY_CATOGEGY ='GET_BLOG_BY_CATEGEGY'
 export const NEW_BLOG_SUCCESS = 'NEW_BLOG_SUCCESS';
 export const GET_BLOGS_SUCCESS = 'GET_BLOGS_SUCCESS';
 export const GET_TOP_BLOG='GET_TOP_BLOG';
 export const BLOG_FAIL = 'BLOGS_FAIL';
+export const GET_BLOG_BY_TITLE='GET_BLOG_BY_TITLE'
 export const UPDATE_BLOG = 'UPDATE_BLOG';
 export const BLOG_DELETE = 'BLOG_DELETE';
 export const GET_BLOG_BY_ID = 'GET_BLOG_BY_ID';

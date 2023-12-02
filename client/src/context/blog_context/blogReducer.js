@@ -4,7 +4,6 @@ export default (state, action) => {
     switch (action.type) {
         case ActionTypes.NEW_BLOG_SUCCESS:
             let blogs = state.blogs ? state.blogs : [];
-
             return{
                 ...state,
                 blogCreated: true,
@@ -16,6 +15,17 @@ export default (state, action) => {
                 ...state,
                 blogs: action.payload
             }
+            case ActionTypes.GET_BLOG_BY_TITLE:
+                return{
+                    ...state,
+                    blogs: action.payload
+                }
+        case ActionTypes.GET_BLOG_BY_CATOGEGY:
+            console.log(action.payload)
+                return{
+                    ...state,
+                    blogs: action.payload
+                }
         case ActionTypes.GET_TOP_BLOG:
                 console.log("GET TOP")
                 console.log(action.payload)

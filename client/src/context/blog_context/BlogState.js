@@ -12,6 +12,7 @@ export default function BlogState(props){
         toasts: null,
         blogCreated: false,
         topblogs:null,
+        blogbycattegory:null,
     }
 
     const [state, dispatch] = useReducer(blogReducer, initialstate);
@@ -20,6 +21,39 @@ export default function BlogState(props){
         headers: {
             'Content-Type': 'application/json',
             'x-auth-token': localStorage.getItem('token'),
+        }
+    }
+    const searchByTitle = async (keyword) => {
+        try {
+            const res = await axios.get(`/api/blogs/search?query=${keyword}`, config);
+            console.log("search")
+            console.log(res)
+            dispatch({
+                type: ActionTypes.GET_BLOG_BY_TITLE, 
+                payload: res.data
+            });
+        } catch (err) {
+            console.log(err.response.data);
+            dispatch({
+                type: ActionTypes.BLOG_FAIL,
+                payload: err.response.data
+            });
+        }
+    };
+    const getBlogsByCategory= async (categoryName)=>{
+        try {
+            const res = await axios.get(`/api/blogs/category/${categoryName}`, config);
+            
+            dispatch({
+                type: ActionTypes.GET_BLOG_BY_CATOGEGY,
+                payload: res.data
+            })
+        } catch (err) {
+            console.log(err.response.data);
+            dispatch({
+                type: ActionTypes.BLOG_FAIL,
+                payload: err.response.data,
+            })
         }
     }
     const getTopBlogs = async () => {
@@ -140,6 +174,7 @@ export default function BlogState(props){
             toasts: state.toasts,
             blogCreated: state.blogCreated,
             topblogs: state.topblogs,
+            blogbycattegory:state.blogbycattegory,
             clearCurrentBlog,
             getBlogs,
             getBlogById,
@@ -147,7 +182,10 @@ export default function BlogState(props){
             updateBlog,
             deleteBlog,
             clearErrors,
-            clearBlogs,getTopBlogs
+            clearBlogs,
+            getTopBlogs,
+            getBlogsByCategory,
+            searchByTitle,
 
         }}>
             {props.children}

@@ -28,21 +28,25 @@ function App() {
         <div className="App">
             <Router>
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                     {/* guest*/}
+                     <Route path="/" element={<Home />} />
+                      {/* admin */}
+                    
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-
                     <Route path="/profile" element={<PrivateRoute />} >
                         <Route path="/profile" element={<Profile />} />
                     </Route>
-
                     <Route path="/blogs" element={<PrivateRoute />} >
                         <Route path="/blogs" element={<BlogList />} />
                     </Route>
-
+                    <Route path="/newblog" element={<PrivateRoute />} >
+                        <Route path="/newblog" element={<NewBlog />} />
+                    </Route>
                     <Route path="/blogs/:id" element={<PrivateRoute />} >
                         <Route path="/blogs/:id" element={<BlogDetail />} />
                     </Route>
+                    
 
                     <Route path="/newblog" element={<PrivateRoute />} >
                         <Route path="/newblog" element={<NewBlog />} />

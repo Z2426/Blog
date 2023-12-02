@@ -1,16 +1,41 @@
 const Blog = require('../models/Blog');
-const getBlogsByCategory = async (req, res) => {
-    const { category } = req.params; 
-    
+const searchBlogsByTitle = async (req, res) => {
+    const query = req.query.query;
     try {
-        const blogsByCategory = await Blog.find({ category });
+        if (!query) {
+            return res.status(400).json({ message: 'Query is required' });
+        }
+        // Sử dụng $regex để tìm kiếm tiêu đề chứa chuỗi query (không phân biệt chữ hoa/thường)
+        const foundBlogs = await Blog.find({ title: { $regex: new RegExp(query, 'i') } });
+        res.json(foundBlogs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+const getBlogsByCategory = async (req, res) => {
+    try {
+        const { category } = req.params; 
+        let blogsByCategory;
+
+        if (category) {
+            blogsByCategory = await Blog.find({ category });
+
+            // Nếu không tìm thấy category, trả về tất cả các blog
+            if (!blogsByCategory || blogsByCategory.length === 0) {
+                blogsByCategory = await Blog.find();
+            }
+        } else {
+            blogsByCategory = await Blog.find();
+        }
+
         res.json(blogsByCategory);
     } catch (err) {
         console.error(`ERROR: ${err.message}`);
         res.status(500).send('Server Error');
     }
 }
-
 const topNewBlogs  = async (req, res) => {
     try {
         const topViewedBlogs = await Blog.find().sort({ views: -1 }).limit(5);
@@ -24,6 +49,35 @@ const getBlogs = async (req, res) => {
     try {
         const blogs = await Blog.find({ user: req.user.id });
         res.json(blogs);
+    } catch (err) {
+        console.error(`ERROR: ${err.message}`);
+        res.status(500).send('Server Error');
+    }
+}
+const getBlogs_Guest = async (req, res) => {
+    try {
+        const blogs = await Blog.find();
+        res.json(blogs);
+    } catch (err) {
+        console.error(`ERROR: ${err.message}`);
+        res.status(500).send('Server Error');
+    }
+}
+const getBlogById_Guest = async (req, res) => {
+    try {
+        const blog = await Blog.findOne({ _id: req.params.id});
+        if (!blog) {
+            return res.status(404).json([
+                {
+                    message: 'Blog not found',
+                    type: 'error'
+                }
+            ]);
+        }
+       
+        blog.views =blog.views+ 1;
+        await blog.save();
+        res.json(blog);
     } catch (err) {
         console.error(`ERROR: ${err.message}`);
         res.status(500).send('Server Error');
@@ -97,6 +151,8 @@ module.exports = {
     getBlogs,
     getBlogById,
     topNewBlogs ,
-    getBlogsByCategory
-   
+    getBlogsByCategory,
+    getBlogById_Guest,
+   getBlogs_Guest,
+   searchBlogsByTitle,
 }
