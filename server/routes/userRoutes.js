@@ -10,11 +10,7 @@ const {
 } = require('../controllers/userController')
 
 router.post('/register', registerUser)
-
 router.post('/login', loginUser);
-
-router.get('/profile', [auth], getProfile)
-
+router.get('/profile', [auth], getProfile) //token not valid
 router.put('/:id', [auth], updateUser)
-
 module.exports = router;

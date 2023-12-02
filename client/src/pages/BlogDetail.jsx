@@ -6,16 +6,9 @@ import {
   Stack, IconButton, Typography
 } from '@mui/material';
 import {toast} from 'react-toastify';
-
-
-// #region -----------( ICONS )-------------
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit'
-// #endregion -----------( ICONS )-------------
-
-
 import { useBlog } from '../middleware/contextHooks';
-
 export default function BlogDetail() {
     const { id } = useParams();
     const navigate = useNavigate();

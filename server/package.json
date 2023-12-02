@@ -9,17 +9,10 @@
         "client": "npm start --prefix ../client",
         "dev": "concurrently \"npm run server\" \"npm run client\""
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/mathieumedia/BlogDemo.git"
-    },
+   
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/mathieumedia/BlogDemo/issues"
-    },
-    "homepage": "https://github.com/mathieumedia/BlogDemo#readme",
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "colors": "^1.4.0",

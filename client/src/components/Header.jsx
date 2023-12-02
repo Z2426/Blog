@@ -21,9 +21,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 // #endregion
 
 const authenticated = ['Blogs', 'Profile']
-
-
-
 export default function PrimarySearchAppBar() {
     const {logoutUser} = useAuth()
     const {clearBlogs} = useBlog()

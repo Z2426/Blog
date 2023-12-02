@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useBlog } from '../middleware/contextHooks'
 import { toast } from 'react-toastify';
@@ -7,6 +7,7 @@ import {
     Grid,
     Button, Container, Tooltip,
     Box, List, ListItem, ListItemText,
+    Paper, Typography 
 } from '@mui/material'
 
 import Masonry from '@mui/lab/Masonry'
@@ -15,70 +16,92 @@ import BlogCard from '../components/BlogCard'
 
 
 export default function BlogList() {
-    const {getBlogs, toasts, clearErrors, blogs, clearCurrentBlog} = useBlog();
+    const { getBlogs, toasts, clearErrors, blogs, clearCurrentBlog, getTopBlogs, topblogs } = useBlog();
     const navigate = useNavigate();
     const [myBlogs, setMyBlogs] = useState([]);
-
+    const [topBlogs, setTopBlogs] = useState([]);
     useEffect(() => {
-        if(!blogs){
-            getBlogs()
-        }
-
-        if(blogs){
-            setMyBlogs(blogs)
-        }
-
-        if(toasts){
-            toasts.forEach(ele => {
-                toast(ele.message, {type: ele.type})
-            });
-            clearErrors()
-        }
-
-    },[toasts, clearErrors, blogs, getBlogs])
+        const fetchData = async () => {
+            try {
+                if(!topblogs){
+                    getTopBlogs()    
+                }
+                if(topblogs){
+                    setTopBlogs(topblogs)
+                }
+                if (toasts) {
+                    toasts.forEach(ele => {
+                        toast(ele.message, { type: ele.type });
+                    });
+                    clearErrors();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, [toasts, clearErrors, topblogs, getTopBlogs]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if(!blogs){
+                   await  getBlogs()
+                }
+                if(blogs){
+                    setMyBlogs(blogs)
+                }
+                if (toasts) {
+                    toasts.forEach(ele => {
+                        toast(ele.message, { type: ele.type });
+                    });
+                    clearErrors();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+    
+        fetchData();
+    }, [toasts, clearErrors, topblogs, getTopBlogs, blogs, getBlogs]);
+    
 
     const onCreateNewBlog = () => {
         clearCurrentBlog();
-        navigate('/newblog')
-    }
+        navigate('/newblog');
+    };
+
     return (
         <MainContainer>
-            <Container maxWidth="lg" sx={{py: 1, my: 1}}>
-                <Grid container spacing={2}>
-                    <Grid item xs={false} md={3}>
-                        <List sx={{borderRadius: 5, mt: 3}}>
-                            {myBlogs?.map(blog => (
-                                <Link
-                                    style={{textDecoration: 'none'}}
-                                    to={`/blogs/${blog._id}`} key={blog._id}>
-                                    <ListItem>
-                                        <Tooltip title={blog.title} placement='right'>
-                                            <ListItemText 
-                                                primary={truncateString(blog.title, 30)} 
-                                            />
-                                        </Tooltip>
-                                    </ListItem>
-                                </Link>
-                            ))}
-                        </List>
+            <Grid container spacing={2} direction="column" alignItems="flex-start">
+                <Paper elevation={3} sx={{ borderRadius: 5, p: 2, mt: 3 }}>
+                    <Typography variant="h6" gutterBottom>
+                        Top Blog New
+                    </Typography>
+                    <List>
+                        {topBlogs?.map(blog => (
+                            <Link
+                                key={blog._id}
+                                style={{ textDecoration: 'none', color: '#333' }}
+                                to={`/blogs/${blog._id}`}
+                            >
+                                <ListItem button>
+                                    <ListItemText primary={truncateString(blog.title, 30)} />
+                                </ListItem>
+                            </Link>
+                        ))}
+                    </List>
+                </Paper>
+            </Grid>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+                <Button onClick={onCreateNewBlog}>Create Blog</Button>
+            </Box>
+            <Grid container spacing={2} direction="row-reverse">
+                {myBlogs?.map(blog => (
+                    <Grid key={blog._id} item xs={12} sm={6}>
+                        <BlogCard blog={blog} /> {/* Render BlogCard component */}
                     </Grid>
-
-                    {/* <Grid item xs={12} md={9}>
-                        
-                    </Grid> */}
-
-                    <Grid item xs={12} md={9}>
-                        <Box sx={{display: 'flex', justifyContent: 'flex-end', mb: 2}}>
-                            <Button onClick={onCreateNewBlog}>Create Blog</Button>
-                        </Box>
-                        <Masonry columns={2}>
-                            {myBlogs?.map(blog => (
-                                <BlogCard blog={blog} key={blog._id} />
-                            ))}
-                        </Masonry>
-                    </Grid>
-                </Grid>
-            </Container>
+                ))}
+            </Grid>
         </MainContainer>
-    )
+    );
 }

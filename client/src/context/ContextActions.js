@@ -9,6 +9,7 @@ export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 export const NEW_BLOG_SUCCESS = 'NEW_BLOG_SUCCESS';
 export const GET_BLOGS_SUCCESS = 'GET_BLOGS_SUCCESS';
+export const GET_TOP_BLOG='GET_TOP_BLOG';
 export const BLOG_FAIL = 'BLOGS_FAIL';
 export const UPDATE_BLOG = 'UPDATE_BLOG';
 export const BLOG_DELETE = 'BLOG_DELETE';

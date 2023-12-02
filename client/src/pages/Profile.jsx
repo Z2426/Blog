@@ -7,14 +7,12 @@ import {useAuth} from '../middleware/contextHooks'
 
 //#region ---------------------- Components ----------------------
 import MainContainer from '../components/MainContainer'
-//#region ---------------------- Components ----------------------
 
 export default function Profile() {
     const {currentUser, getProfile, updateUser} = useAuth()
     const [profile, setProfile] = useState({})
     const [isDisabled, setIsDisabled] = useState(true);
     const [temp, setTemp] = useState(null)
-
     useEffect(() => {
         if(!currentUser) {
             getProfile();

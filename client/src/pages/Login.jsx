@@ -6,14 +6,9 @@ import {
 } from '@mui/material'
 import { useNavigate, Link } from 'react-router-dom'
 import {toast} from 'react-toastify'
-import Copyright
- from '../components/Copyright'
-// #region --------------( ICONS )--------------
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-// #endregion
-
 import {useAuth} from '../middleware/contextHooks'
 export default function Login() {
     const {loginUser, clearErrors, toasts, isAuthenticated} = useAuth();
@@ -105,7 +100,7 @@ export default function Login() {
                     </Grid>
                 </Grid>
             </Box>
-            <Copyright sx={{mt: 4}} />
+            
         </Container>
     )
 }

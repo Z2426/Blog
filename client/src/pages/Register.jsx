@@ -6,23 +6,16 @@ import {
 } from '@mui/material'
 import { useNavigate, Link } from 'react-router-dom'
 import {toast} from 'react-toastify'
-import Copyright
- from '../components/Copyright'
-// #region --------------( ICONS )--------------
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-// #endregion
-
 import {useAuth} from '../middleware/contextHooks'
 export default function Register() {
     const {registerUser, clearErrors, toasts, isAuthenticated} = useAuth();
-
-
     const navigate = useNavigate()
     const [user, setUser] = useState({
-        firstName: 'Peter', lastName: 'Pan', 
-        email: 'peterpan@mail.com', password: 'Password123', 
+        firstName: 'user', lastName: 'user', 
+        email: 'txt@mail.com', password: 'Password123', 
         confirmPassword: 'Password123'
     })
 
@@ -49,12 +42,10 @@ export default function Register() {
             toast('Please fill all the fields', {type: 'error'})
             return
         }
-
         if(password !== confirmPassword) {
             toast('Passwords do not match', {type: 'error'})
             return
         }
-
         registerUser(user)
     }
     return (
@@ -121,9 +112,7 @@ export default function Register() {
                                 </InputAdornment>,
                             }}
                         />
-                    </Grid>
-                    
-                        
+                    </Grid>                       
                 </Grid>
                 <Button 
                     onClick={handleRegister}
@@ -142,7 +131,7 @@ export default function Register() {
                     </Grid>
                 </Grid>
             </Box>
-            <Copyright sx={{mt: 4}} />
+         
         </Container>
     )
 }

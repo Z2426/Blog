@@ -5,3 +5,11 @@ I/SET EVIROMENT
 - B4/ cd server
 - B5/ npm i 
 
+_____________
+BS :
+folder :
+ until : xac thuc email
+database : db : connect database
+____________FEATURE______________
+1. Comment
+2. catory blog

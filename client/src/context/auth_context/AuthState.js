@@ -23,7 +23,7 @@ export default function AuthState(props) {
         }
     }
 
-    // #region --------------[ Actions ]--------------
+   
     
     const registerUser = async (userData) => {
         try {
@@ -100,7 +100,7 @@ export default function AuthState(props) {
             })
         }
     }
-    // #endregion
+
 
     return (
         <AuthContext.Provider value={{

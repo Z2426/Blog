@@ -4,7 +4,6 @@ import {
 } from 'react-router-dom'
 import {ToastContainer, Zoom, Slide, Bounce, Flip} from 'react-toastify';
 
-// #region --------------[ Import Components ]--------------
 import BlogDetail from './pages/BlogDetail';
 import BlogList from './pages/BlogList';
 import Home from './pages/Home';
@@ -12,9 +11,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import NewBlog from './pages/NewBlog';
-//import EditBlog from './pages/EditBlog';
 import PrivateRoute from './pages/PrivateRoute';
-// #endregion
 
 function transitionAnimation () {
     const list = [Zoom, Slide, Bounce, Flip];
@@ -62,5 +59,4 @@ function App() {
         </div>
     );
 }
-
 export default App;

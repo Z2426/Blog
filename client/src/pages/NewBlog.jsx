@@ -11,9 +11,8 @@ import {
     FormControlLabel, Checkbox
 } from '@mui/material';
 
-// #region -----------( COMPONENTS )-------------
 import MainContainer from '../components/MainContainer';
-// #endregion -----------( COMPONENTS )-------------
+
 
 
 export default function NewBlog() {

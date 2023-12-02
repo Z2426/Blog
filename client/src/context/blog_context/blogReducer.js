@@ -1,6 +1,5 @@
 import * as ActionTypes from '../ContextActions'
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default (state, action) => {
     switch (action.type) {
         case ActionTypes.NEW_BLOG_SUCCESS:
@@ -17,6 +16,14 @@ export default (state, action) => {
                 ...state,
                 blogs: action.payload
             }
+        case ActionTypes.GET_TOP_BLOG:
+                console.log("GET TOP")
+                console.log(action.payload)
+               
+                return{
+                    ...state,
+                    topblogs: action.payload
+                }
         case ActionTypes.BLOG_FAIL:
             return{
                 ...state,

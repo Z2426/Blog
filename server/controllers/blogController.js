@@ -1,35 +1,54 @@
 const Blog = require('../models/Blog');
-const colors = require('colors');
+const getBlogsByCategory = async (req, res) => {
+    const { category } = req.params; 
+    
+    try {
+        const blogsByCategory = await Blog.find({ category });
+        res.json(blogsByCategory);
+    } catch (err) {
+        console.error(`ERROR: ${err.message}`);
+        res.status(500).send('Server Error');
+    }
+}
 
-
-
+const topNewBlogs  = async (req, res) => {
+    try {
+        const topViewedBlogs = await Blog.find().sort({ views: -1 }).limit(5);
+        res.json(topViewedBlogs);
+    } catch (err) {
+        console.error(`ERROR: ${err.message}`);
+        res.status(500).send('Server Error');
+    }
+}
 const getBlogs = async (req, res) => {
     try {
         const blogs = await Blog.find({ user: req.user.id });
         res.json(blogs);
     } catch (err) {
-        console.error(`ERROR: ${err.message}`.bgRed.underline.bold);
+        console.error(`ERROR: ${err.message}`);
         res.status(500).send('Server Error');
     }
 }
-
 const getBlogById = async (req, res) => {
     try {
         const blog = await Blog.findOne({ _id: req.params.id, user: req.user.id });
-
-        if(!blog) return res.status(404).json([
-            {
-                message: 'Blog not found',
-                type: 'error'
-            }
-        ])
+        if (!blog) {
+            return res.status(404).json([
+                {
+                    message: 'Blog not found',
+                    type: 'error'
+                }
+            ]);
+        }
+       
+        blog.views =blog.views+ 1;
+        await blog.save();
         res.json(blog);
     } catch (err) {
-        console.error(`ERROR: ${err.message}`.bgRed.underline.bold);
+        console.error(`ERROR: ${err.message}`);
         res.status(500).send('Server Error');
     }
 }
-
 const createBlog = async (req, res) => {
     try {
         const { title, content } = req.body;
@@ -45,22 +64,20 @@ const createBlog = async (req, res) => {
 
         res.json(newBlog);
     } catch (err) {
-        console.error(`ERROR: ${err.message}`.bgRed.underline.bold);
+        console.error(`ERROR: ${err.message}`);
         res.status(500).send('Server Error');
     }
 }
-
 const updateBlog = async (req, res) => {
     try {
         const { title, content } = req.body;
         const blog = await Blog.findOneAndUpdate({ _id: req.params.id, user: req.user.id }, { title, content }, { new: true });
         res.json(blog);
     } catch (err) {
-        console.error(`ERROR: ${err.message}`.bgRed.underline.bold);
+        console.error(`ERROR: ${err.message}`);
         res.status(500).send('Server Error');
     }
 }
-
 const deleteBlog = async (req, res) => {
     try {
         const blog = await Blog.findOneAndDelete({ _id: req.params.id, user: req.user.id });
@@ -69,15 +86,17 @@ const deleteBlog = async (req, res) => {
             toasts: [{ message: 'Blog deleted', type: 'success' }]
         });
     } catch (error) {
-        console.error(`ERROR: ${err.message}`.bgRed.underline.bold);
+        console.error(`ERROR: ${err.message}`);
         res.status(500).send('Server Error');
     }
 }
-
 module.exports = {
     deleteBlog,
     updateBlog,
     createBlog,
     getBlogs,
-    getBlogById
+    getBlogById,
+    topNewBlogs ,
+    getBlogsByCategory
+   
 }
