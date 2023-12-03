@@ -13,20 +13,30 @@ const searchBlogsByTitle = async (req, res) => {
         res.status(500).json({ message: 'Server Error' });
     }
 };
-
+const getBlogsByCategoryAndId = async (req, res) => {
+    try {
+        const { category } = req.params; 
+        let blogsByCategory;
+        blogsByCategory = await Blog.find({ category ,user: req.user.id });
+        if ( category==='Others') {
+                blogsByCategory = await Blog.find();
+            }
+        res.json(blogsByCategory);
+    } catch (err) {
+        console.error(`ERROR: ${err.message}`);
+        res.status(500).send('Server Error');
+    }
+}
 const getBlogsByCategory = async (req, res) => {
     try {
         const { category } = req.params; 
         let blogsByCategory;
-
-        if (category) {
-            blogsByCategory = await Blog.find({ category });
-            if (!blogsByCategory || blogsByCategory.length === 0) {
+        blogsByCategory = await Blog.find({ category });
+        
+        if ( category==='Others') {
                 blogsByCategory = await Blog.find();
             }
-        } else {
-            blogsByCategory = await Blog.find();
-        }
+        
 
         res.json(blogsByCategory);
     } catch (err) {
@@ -154,4 +164,5 @@ module.exports = {
     getBlogById_Guest,
    getBlogs_Guest,
    searchBlogsByTitle,
+   getBlogsByCategoryAndId
 }

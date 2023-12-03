@@ -44,6 +44,7 @@ export default function NewBlog() {
 
         if (blogCreated) {
             const id = currentBlog._id;
+           
             navigate(`/blogs/${id}`);
         }
     }, [toasts, clearErrors, blogs, getBlogs, navigate, blogCreated, currentBlog]);
@@ -52,6 +53,7 @@ export default function NewBlog() {
         if (newBlog.title.length > 0 && newBlog.content.length > 0 && newBlog.category.length > 0) {
             console.log(newBlog);
             createBlog(newBlog);
+            navigate(`/blogs`);
         } else {
             toast('Please provide a blog title, content, and select a category', { type: 'error' });
         }

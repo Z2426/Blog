@@ -8,7 +8,9 @@ import { truncateString } from '../middleware/utils'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router-dom';
 
-export default function BlogCard(props) {
+
+
+export default function Showcard(props) {
     const navigate = useNavigate();
     return (
 
@@ -25,7 +27,7 @@ export default function BlogCard(props) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => navigate(`/blogs/${props.blog._id}`)}>
+                <Button size="small" onClick={() => navigate(`/blogs/guest/show/${props.blog._id}`)}>
                     Read More
                 </Button>
             </CardActions>

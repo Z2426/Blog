@@ -12,6 +12,8 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import NewBlog from './pages/NewBlog';
 import PrivateRoute from './pages/PrivateRoute';
+import ShowBlog from './pages/ShowBlog'
+import ManageBlog from './pages/MangeBlog'
 function transitionAnimation () {
     const list = [Zoom, Slide, Bounce, Flip];
     return list[Math.floor(Math.random() * list.length)];
@@ -27,13 +29,17 @@ function App() {
         <div className="App">
             <Router>
                 <Routes>
-          
+                      {/*Guest */}
+                      <Route path="/blogs/guest/show/:id" element={<ShowBlog />} />
                       {/* admin */}
                     <Route path="/" element={<Login />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/profile" element={<PrivateRoute />} >
                         <Route path="/profile" element={<Profile />} />
+                    </Route>
+                    <Route path="/manage-posts" element={<PrivateRoute />} >
+                        <Route path="/manage-posts" element={<ManageBlog />} />
                     </Route>
                     <Route path="/blogs" element={<PrivateRoute />} >
                         <Route path="/blogs" element={<BlogList />} />

@@ -11,9 +11,9 @@ import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {useNavigate} from 'react-router-dom';
-
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import {useAuth, useBlog} from '../middleware/contextHooks'
-
+import { Link } from 'react-router-dom';
 // #region --------------( ICONS )--------------
 import BookIcon from '@mui/icons-material/Book';
 import PersonIcon from '@mui/icons-material/Person';
@@ -21,6 +21,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 // #endregion
 
 const authenticated = ['Blogs', 'Profile']
+const menuItems = [
+    { text: 'Tạo bài viết', link: '/create-post', icon: <BookIcon /> },
+    { text: 'Quản lí bài viết', link: '/manage-posts', icon: <PersonIcon /> }
+];
 export default function PrimarySearchAppBar() {
     const {logoutUser} = useAuth()
     const {clearBlogs} = useBlog()
@@ -138,64 +142,91 @@ export default function PrimarySearchAppBar() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{color: 'white',  display: { xs: 'none', sm: 'block' } }}
-                    >
-                        My Blog
-                    </Typography>
-                
-                <Box sx={{ flexGrow: 1 }} />
+        <AppBar position="static">
+            <Toolbar>
+                <Typography variant="h6" noWrap sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+                    My Blog
+                </Typography>
+
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                     {authenticated.map(page => (
-                        <Button key={page} variant='text'
-                        sx={{my: 2, display: 'block'}}
-                        onClick={() => navigate(`/${page.toLowerCase()}`)}>
+                        <Button
+                            key={page}
+                            variant='text'
+                            onClick={() => navigate(`/${page.toLowerCase()}`)}
+                        >
                             {page}
                         </Button>
                     ))}
-                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                </Box>
+
+                <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                     <IconButton
-                    size="large"
-                    aria-label="show more"
-                    aria-controls={mobileMenuId}
-                    aria-haspopup="true"
-                    onClick={handleMobileMenuOpen}
-                    color="inherit"
+                        aria-label="show more"
+                        aria-controls="mobile-menu"
+                        aria-haspopup="true"
+                        onClick={handleMobileMenuOpen}
+                        color="inherit"
                     >
-                    <MoreIcon />
+                        <MoreIcon />
                     </IconButton>
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                <Button variant="outlined" sx={{ mx: 1 }} onClick={handleLogin}>
-                    Đăng nhập
-                </Button>
-                <Button variant="outlined" sx={{ mx: 1 }} onClick={handleRegister}>
-                    Đăng ký
-                </Button>
-            </Box>
-                    <IconButton
-                    size="large"
-                    edge="end"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={handleProfileMenuOpen}
-                    color="inherit"
+
+                <Menu
+                    id="mobile-menu"
+                    anchorEl={mobileMoreAnchorEl}
+                    open={isMobileMenuOpen}
+                    onClose={handleMenuClose}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                    {menuItems.map(item => (
+                        <MenuItem key={item.text} onClick={() => navigate(item.link)}>
+                            <ListItemIcon>{item.icon}</ListItemIcon>
+                            <ListItemText>{item.text}</ListItemText>
+                        </MenuItem>
+                    ))}
+                    <MenuItem onClick={handleLogout}>
+                        <ListItemIcon><LogoutIcon /></ListItemIcon>
+                        <ListItemText>Logout</ListItemText>
+                    </MenuItem>
+                </Menu>
+
+                <IconButton
+                        edge="end"
+                        aria-label="account of current user"
+                        aria-controls="profile-menu"
+                        aria-haspopup="true"
+                        onClick={handleProfileMenuOpen}
+                        color="inherit"
                     >
-                    <AccountCircle />
+                        <AccountCircle />
                     </IconButton>
-                </Box>
-               
-                </Toolbar>
-            </AppBar>
-            {renderMobileMenu}
-            {renderMenu}
-        </Box>
-    );
+
+                    <Menu
+                        id="profile-menu"
+                        anchorEl={anchorEl}
+                        open={isMenuOpen}
+                        onClose={handleMenuClose}
+                        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    >
+                        <MenuItem component={Link} to="/newblog">
+                            <ListItemIcon><BookIcon /></ListItemIcon>
+                            <ListItemText>Tạo bài đăng</ListItemText>
+                        </MenuItem>
+                        <MenuItem component={Link} to="/manage-posts">
+                            <ListItemIcon><PersonIcon /></ListItemIcon>
+                            <ListItemText>Quản lí bài đăng</ListItemText>
+                        </MenuItem>
+                        <MenuItem onClick={handleLogout}>
+                            <ListItemIcon><LogoutIcon /></ListItemIcon>
+                            <ListItemText>Logout</ListItemText>
+                        </MenuItem>
+                    </Menu>
+            </Toolbar>
+        </AppBar>
+    </Box>
+    )
+       
 }

@@ -20,7 +20,7 @@ const BlogSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        
+        default:'All'
         
       },
     

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Paper, Typography, List, ListItem, ListItemText } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Container, Paper, Typography, List, ListItem, ListItemText } from '@mui/material';
 
 
 const CategoryMenu = ({ handleCategoryClick }) => {

@@ -15,6 +15,7 @@ import MainContainer from '../components/MainContainer'
 import BlogCard from '../components/BlogCard'
 import CategoryMenu from '../components/MenuCatotegory'
 import SearchBar from '../components/SearchBar';
+import Showcard from '../components/Showcard'
 export default function BlogList() {
     const { getBlogs, toasts, clearErrors, blogs, clearCurrentBlog, getTopBlogs, topblogs ,getBlogsByCategory} = useBlog();
     const navigate = useNavigate();
@@ -65,40 +66,35 @@ export default function BlogList() {
         fetchData();
     }, [toasts, clearErrors, topblogs, getTopBlogs, blogs, getBlogs]);
 
-    const onCreateNewBlog = () => {
-        clearCurrentBlog();
-        navigate('/newblog');
-    };
 
     return (
-        <>
+    
         <MainContainer>
-            {/* Phần Top New */}
             <Grid container spacing={2} direction="row" alignItems="flex-start">
-      <Grid item xs={6}>
+    <Grid item xs={3}>
         <Paper elevation={3} sx={{ borderRadius: 5, p: 2, mt: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            Top Blog New
-          </Typography>
-          <List>
-            {topBlogs?.map((blog) => (
-              <Link
-                key={blog._id}
-                style={{ textDecoration: 'none', color: '#333' }}
-                to={`/blogs/${blog._id}`}
-              >
-                <ListItem button>
-                  <ListItemText primary={truncateString(blog.title, 30)} />
-                </ListItem>
-              </Link>
-            ))}
-          </List>
+            <Typography variant="h6" gutterBottom>
+                Top Blog New
+            </Typography>
+            <List>
+                {topBlogs?.map((blog) => (
+                    <Link
+                        key={blog._id}
+                        style={{ textDecoration: 'none', color: '#333' }}
+                        to={`/blogs/guest/show/${blog._id}`}
+                    >
+                        <ListItem button>
+                            <ListItemText primary={truncateString(blog.title, 30)} />
+                        </ListItem>
+                    </Link>
+                ))}
+            </List>
         </Paper>
-      </Grid>
-      <Grid item xs={6}>
-        <SearchBar />
-      </Grid>
     </Grid>
+    <Grid item xs={3}>
+        <SearchBar />
+    </Grid>
+</Grid>
             {/* Category Menu */}
             <Grid container spacing={2} direction="row">
                 <Grid item xs={3}>
@@ -109,7 +105,7 @@ export default function BlogList() {
                     <Grid container spacing={2} direction="row">
                         {myBlogs?.map(blog => (
                             <Grid key={blog._id} item xs={12} sm={6}>
-                                <BlogCard blog={blog} />
+                                <Showcard blog={blog} />
                             </Grid>
                         ))}
                     </Grid>
@@ -117,9 +113,6 @@ export default function BlogList() {
             </Grid>
         </MainContainer>
     
-    </>
-    
-
     
     )
     

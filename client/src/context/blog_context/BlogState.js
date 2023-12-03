@@ -75,10 +75,41 @@ export default function BlogState(props){
         }
     }
     
-
+    const getBlogsByCategoryandID= async (categoryName)=>{
+        try {
+            const res = await axios.get(`/api/blogs/category/${categoryName}`, config);
+            console.log('ci')
+            console.log(res)
+            dispatch({
+                type: ActionTypes.GET_BLOG_BY_CATOGEGY,
+                payload: res.data
+            })
+        } catch (err) {
+            console.log(err.response.data);
+            dispatch({
+                type: ActionTypes.BLOG_FAIL,
+                payload: err.response.data,
+            })
+        }
+    }
     const getBlogs = async () => {
         try {
             const res = await axios.get('/api/blogs', config);
+            dispatch({
+                type: ActionTypes.GET_BLOGS_SUCCESS,
+                payload: res.data
+            })
+        } catch (err) {
+            console.log(err.response.data);
+            dispatch({
+                type: ActionTypes.BLOG_FAIL,
+                payload: err.response.data,
+            })
+        }
+    }
+    const getBlogs_Guest = async () => {
+        try {
+            const res = await axios.get('/api/blogs/guest/show', config);
             dispatch({
                 type: ActionTypes.GET_BLOGS_SUCCESS,
                 payload: res.data
@@ -109,7 +140,23 @@ export default function BlogState(props){
             })
         }
     }
+    const getBlogById_Guest = async (blogId) => {
     
+        try {
+            const res = await axios.get(`/api/blogs/guest/show/${blogId}`, config);
+            console.log(res)
+            dispatch({
+                type: ActionTypes.GET_BLOG_BY_ID,
+                payload: res.data
+            })
+        } catch (err) {
+            console.log(err.response.data);
+            dispatch({
+                type: ActionTypes.BLOG_FAIL,
+                payload: err.response.data,
+            })
+        }
+    }
 
     const createBlog = async (blogData) => {
         try {
@@ -195,7 +242,9 @@ export default function BlogState(props){
             getTopBlogs,
             getBlogsByCategory,
             searchByTitle,
-            
+            getBlogById_Guest,
+            getBlogs_Guest,
+            getBlogsByCategoryandID,
 
         }}>
             {props.children}

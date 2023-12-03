@@ -11,7 +11,8 @@ const {
   getBlogById,
   topNewBlogs,getBlogsByCategory,getBlogById_Guest ,
   getBlogs_Guest,
-  searchBlogsByTitle
+  searchBlogsByTitle,
+  getBlogsByCategoryAndId
 } = require('../controllers/blogController');
 // Guest routes
 router.get(`/guest/search`,searchBlogsByTitle)
@@ -21,6 +22,7 @@ router.get('/guest/show/:id',getBlogById_Guest);
 router.get('/guest/show',getBlogs_Guest)
 // Admin routes
 router.post('/', [auth], createBlog);
+router.get('/category/:category', [auth], getBlogsByCategoryAndId);
 router.put('/:id', [auth], updateBlog);
 router.delete('/:id', [auth], deleteBlog);
 router.get('/:id', [auth], getBlogById);
