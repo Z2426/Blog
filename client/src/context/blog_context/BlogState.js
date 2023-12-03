@@ -88,10 +88,13 @@ export default function BlogState(props){
     }
 
     const getBlogById = async (blogId) => {
+    
         try {
+            const res = await axios.get(`/api/blogs/${blogId}`, config);
+            console.log(res)
             dispatch({
                 type: ActionTypes.GET_BLOG_BY_ID,
-                payload: blogId
+                payload: res.data
             })
         } catch (err) {
             console.log(err.response.data);

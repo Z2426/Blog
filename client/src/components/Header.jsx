@@ -76,7 +76,13 @@ export default function PrimarySearchAppBar() {
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );
+    const handleLogin = () => {
+        navigate('/login');
+    };
 
+    const handleRegister = () => {
+        navigate('/register');
+    };
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
         <Menu
@@ -99,6 +105,15 @@ export default function PrimarySearchAppBar() {
                     <BookIcon />
                 </IconButton>
                 <p>Blogs</p>
+            </MenuItem>
+            <MenuItem onClick={() => navigate('/profile')}>
+                <IconButton
+                size="large"
+                color="inherit"
+                >
+                    <PersonIcon />
+                </IconButton>
+                <p>Profile</p>
             </MenuItem>
             <MenuItem onClick={() => navigate('/profile')}>
                 <IconButton
@@ -144,7 +159,26 @@ export default function PrimarySearchAppBar() {
                             {page}
                         </Button>
                     ))}
-                    
+                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                    <IconButton
+                    size="large"
+                    aria-label="show more"
+                    aria-controls={mobileMenuId}
+                    aria-haspopup="true"
+                    onClick={handleMobileMenuOpen}
+                    color="inherit"
+                    >
+                    <MoreIcon />
+                    </IconButton>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                <Button variant="outlined" sx={{ mx: 1 }} onClick={handleLogin}>
+                    Đăng nhập
+                </Button>
+                <Button variant="outlined" sx={{ mx: 1 }} onClick={handleRegister}>
+                    Đăng ký
+                </Button>
+            </Box>
                     <IconButton
                     size="large"
                     edge="end"
@@ -157,18 +191,7 @@ export default function PrimarySearchAppBar() {
                     <AccountCircle />
                     </IconButton>
                 </Box>
-                <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                    <IconButton
-                    size="large"
-                    aria-label="show more"
-                    aria-controls={mobileMenuId}
-                    aria-haspopup="true"
-                    onClick={handleMobileMenuOpen}
-                    color="inherit"
-                    >
-                    <MoreIcon />
-                    </IconButton>
-                </Box>
+               
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}

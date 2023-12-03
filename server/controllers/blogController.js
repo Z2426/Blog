@@ -21,8 +21,6 @@ const getBlogsByCategory = async (req, res) => {
 
         if (category) {
             blogsByCategory = await Blog.find({ category });
-
-            // Nếu không tìm thấy category, trả về tất cả các blog
             if (!blogsByCategory || blogsByCategory.length === 0) {
                 blogsByCategory = await Blog.find();
             }
@@ -105,10 +103,11 @@ const getBlogById = async (req, res) => {
 }
 const createBlog = async (req, res) => {
     try {
-        const { title, content } = req.body;
+        const { title, content ,category} = req.body;
         const newBlog = new Blog({
             title,
             content,
+            category,
             user: req.user.id
         });
         

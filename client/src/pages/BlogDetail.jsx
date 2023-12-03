@@ -68,7 +68,7 @@ export default function BlogDetail() {
         return (
             <Stack spacing={2}>
                 <Stack spacing={2} direction='row'>
-                    <TextField label='Title' value={blog?.content} disabled sx={{flexGrow: 1}}/>
+                    <TextField label='Title' value={blog?.title} disabled sx={{flexGrow: 1}}/>
                     <IconButton onClick={handleEdit}>
                         <EditIcon />
                     </IconButton>

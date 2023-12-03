@@ -12,7 +12,8 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import NewBlog from './pages/NewBlog';
 import PrivateRoute from './pages/PrivateRoute';
-
+import Home_Guest  from './pages/Home_Guest'
+import ShowBlog from './pages/ShowBlog'
 function transitionAnimation () {
     const list = [Zoom, Slide, Bounce, Flip];
     return list[Math.floor(Math.random() * list.length)];
@@ -30,6 +31,7 @@ function App() {
                 <Routes>
                      {/* guest*/}
                      <Route path="/" element={<Home />} />
+                     <Route path="/blogs/show/:id" element={<ShowBlog />} />
                       {/* admin */}
                     
                     <Route path="/login" element={<Login />} />

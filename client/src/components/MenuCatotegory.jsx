@@ -2,6 +2,7 @@ import React from 'react';
 import { Paper, Typography, List, ListItem, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+
 const CategoryMenu = ({ handleCategoryClick }) => {
     const categories = ['All','TechnologyNews', 'Phones', 'Computers', 'Others'];
 

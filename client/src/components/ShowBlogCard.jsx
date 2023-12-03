@@ -27,7 +27,7 @@ export default function BlogCard(props) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => navigate(`/blogs/${props.blog._id}`)}>
+                <Button size="small" onClick={() => navigate(`/blogs/show/${props.blog._id}`)}>
                     Read More
                 </Button>
             </CardActions>

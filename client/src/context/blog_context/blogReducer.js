@@ -54,7 +54,8 @@ export default (state, action) => {
         case ActionTypes.GET_BLOG_BY_ID:
             return {
                 ...state,
-                currentBlog: state.blogs ? state.blogs.find(blog => blog._id === action.payload) : null
+                currentBlog: state.blogs ? state.blogs.find(blog => blog._id === action.payload) : null,
+                
             }
         case ActionTypes.CLEAR_ERRORS:
             return {
