@@ -23,9 +23,10 @@ export default function BlogState(props){
             'x-auth-token': localStorage.getItem('token'),
         }
     }
+    //Guest
     const searchByTitle = async (keyword) => {
         try {
-            const res = await axios.get(`/api/blogs/search?query=${keyword}`, config);
+            const res = await axios.get(`/api/blogs/guest/search?query=${keyword}`, config);
             console.log("search")
             console.log(res)
             dispatch({
@@ -40,9 +41,10 @@ export default function BlogState(props){
             });
         }
     };
+    //Guest
     const getBlogsByCategory= async (categoryName)=>{
         try {
-            const res = await axios.get(`/api/blogs/category/${categoryName}`, config);
+            const res = await axios.get(`/api/blogs/guest/category/${categoryName}`, config);
             
             dispatch({
                 type: ActionTypes.GET_BLOG_BY_CATOGEGY,
@@ -56,9 +58,10 @@ export default function BlogState(props){
             })
         }
     }
+    //Guest
     const getTopBlogs = async () => {
         try {
-            const res = await axios.get('/api/blogs/topblogs', config);
+            const res = await axios.get('/api/blogs/guest/topblogs', config);
             dispatch({
                 type: ActionTypes.GET_TOP_BLOG,
                 payload: res.data
@@ -71,6 +74,8 @@ export default function BlogState(props){
             })
         }
     }
+    
+
     const getBlogs = async () => {
         try {
             const res = await axios.get('/api/blogs', config);
@@ -104,6 +109,7 @@ export default function BlogState(props){
             })
         }
     }
+    
 
     const createBlog = async (blogData) => {
         try {
@@ -189,6 +195,7 @@ export default function BlogState(props){
             getTopBlogs,
             getBlogsByCategory,
             searchByTitle,
+            
 
         }}>
             {props.children}

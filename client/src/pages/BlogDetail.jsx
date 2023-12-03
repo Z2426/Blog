@@ -27,7 +27,8 @@ export default function BlogDetail() {
         } else if(!currentBlog || currentBlog?._id !== id) {
             getBlogById(id);
         }
-
+        console.log("Current blog")
+         console.log(currentBlog)
         if(currentBlog?._id === id) {
             setBlog(currentBlog);
         }
@@ -109,4 +110,3 @@ export default function BlogDetail() {
         </MainContainer>
     )
 }
-

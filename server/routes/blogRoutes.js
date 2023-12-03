@@ -14,11 +14,11 @@ const {
   searchBlogsByTitle
 } = require('../controllers/blogController');
 // Guest routes
-router.get(`/search`,searchBlogsByTitle)
-router.get('/category/:category',getBlogsByCategory)
-router.get('/topblogs',topNewBlogs)
-router.get('/show/:id',getBlogById_Guest);
-router.get('/show',getBlogs_Guest)
+router.get(`/guest/search`,searchBlogsByTitle)
+router.get('/guest/category/:category',getBlogsByCategory)
+router.get('/guest/topblogs',topNewBlogs)
+router.get('/guest/show/:id',getBlogById_Guest);
+router.get('/guest/show',getBlogs_Guest)
 // Admin routes
 router.post('/', [auth], createBlog);
 router.put('/:id', [auth], updateBlog);

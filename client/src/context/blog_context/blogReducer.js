@@ -52,11 +52,11 @@ export default (state, action) => {
                 toasts: action.payload.toasts
             }
         case ActionTypes.GET_BLOG_BY_ID:
+            
             return {
                 ...state,
-                currentBlog: state.blogs ? state.blogs.find(blog => blog._id === action.payload) : null,
-                
-            }
+                currentBlog: action.payload
+            };
         case ActionTypes.CLEAR_ERRORS:
             return {
                 ...state,
